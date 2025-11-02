@@ -25,7 +25,8 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 "_/_"       { print_token("OP_DIV", yytext); }
 
 "_,_"       { print_token("PUNC_COMMA", yytext); }
-";"         { print_token("PUNC_SEMICOLON", yytext); }
+";'"        { print_token("PUNC_SEMI_APOS", yytext); }   /* replaces ; */
+"::"        { print_token("PUNC_COLONPAIR", yytext); }   /* new extra punctuation */
 
 {STR}       { print_token("STRING", yytext); }
 {INT}       { print_token("INTEGER", yytext); }
