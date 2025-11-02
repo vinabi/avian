@@ -1,0 +1,38 @@
+// Avian Mini C++ test program with custom operators
+avn_func avn_int add(avn_int a, avn_int b) {
+    avn_return a _+_ b;
+}
+
+avn_func avn_int sub(avn_int x, avn_int y) {
+    avn_return x _-_ y;
+}
+
+avn_func avn_int avn_main() {
+    avn_int a = 10;
+    avn_int b = 5;
+    avn_int sum = 0;
+
+    avn_if (a _-_ b) {
+        avn_print "Positive difference";
+    } avn_else {
+        avn_print "Zero or negative";
+    }
+
+    sum = a _+_ b;
+    avn_print "Sum is "; avn_print sum;
+
+    sum = a _*_ b;
+    avn_print "Product is "; avn_print sum;
+
+    sum = a _/_ b;
+    avn_print "Quotient is "; avn_print sum;
+
+    a _++_;
+    b _--_;
+
+    avn_print "After increment/decrement, values are";
+    avn_print a _,_ b;
+
+    avn_end;
+    avn_return 0;
+}
