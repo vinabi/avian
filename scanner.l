@@ -23,6 +23,11 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 "_-_"       { print_token("OP_SUB", yytext); }
 "_*_"       { print_token("OP_MUL", yytext); }
 "_/_"       { print_token("OP_DIV", yytext); }
+"("         { print_token("PUNC_LPAREN", yytext); }
+")"         { print_token("PUNC_RPAREN", yytext); }
+"{"         { print_token("PUNC_LBRACE", yytext); }
+"}"         { print_token("PUNC_RBRACE", yytext); }
+"="         { print_token("OP_ASSIGN", yytext); }
 
 "_,_"       { print_token("PUNC_COMMA", yytext); }
 ";'"        { print_token("PUNC_SEMI_APOS", yytext); }   /* replaces ; */
@@ -42,3 +47,4 @@ int main(void){
     yylex();
     return 0;
 }
+
