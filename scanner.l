@@ -32,7 +32,7 @@ STR     \"[^\"]*\"
                                    BEGIN(INITIAL);
                                 }
 
-avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn_print|avn_scan|avn_int|avn_float|avn_str|avn_main|avn_end
+avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn_cin|avn_cout|avn_scan|avn_int|avn_float|avn_str|avn_main|avn_end
                                 { print_token("KEYWORD", yytext); }
 
 "_++_"      { print_token("OP_INC", yytext); }
@@ -56,7 +56,7 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 "{"         { print_token("LBRACE", yytext); }
 "}"         { print_token("RBRACE", yytext); }
 ","         { print_token("COMMA", yytext); }
-";'"         { print_token("SEMICOLON", yytext); }
+";'"        { print_token("SEMICOLON", yytext); }
 "<"         { print_token("LT_OP", yytext); }
 ">"         { print_token("GT_OP", yytext); }
 "=="        { print_token("EQ_OP", yytext); }
@@ -78,3 +78,4 @@ int main(void){
     yylex();
     return 0;
 }
+
