@@ -62,6 +62,9 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 "=="        { print_token("EQ_OP", yytext); }
 "!="        { print_token("NE_OP", yytext); }
 
+"<<"        { print_token("EXE_OP", yytext); }
+">>"        { print_token("INS_OP", yytext); }
+
 {STR}       { print_token("STRING", yytext); }
 {EXP}       { print_token("EXP_NUMBER", yytext); }
 {FLOAT}     { print_token("FLOAT_NUMBER", yytext); }
@@ -78,4 +81,5 @@ int main(void){
     yylex();
     return 0;
 }
+
 
