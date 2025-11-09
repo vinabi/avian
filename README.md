@@ -1,4 +1,4 @@
-# Avian Mini C++ based Language
+# Avian
 
 ## Overview
 
