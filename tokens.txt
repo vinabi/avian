@@ -1,130 +1,136 @@
-KEYWORD	avn_func
-KEYWORD	avn_int
-IDENTIFIER	add
-PUNC_LPAREN	(
-KEYWORD	avn_int
-IDENTIFIER	a
-KEYWORD	avn_int
-IDENTIFIER	b
-PUNC_RPAREN	)
-PUNC_LBRACE	{
-KEYWORD	avn_return
-IDENTIFIER	a
-OP_ADD	_+_
-IDENTIFIER	b
-PUNC_SEMI_APOS	;'
-PUNC_RBRACE	}
-KEYWORD	avn_func
-KEYWORD	avn_int
-IDENTIFIER	sub
-PUNC_LPAREN	(
-KEYWORD	avn_int
-IDENTIFIER	x
-KEYWORD	avn_int
-IDENTIFIER	y
-PUNC_RPAREN	)
-PUNC_LBRACE	{
-KEYWORD	avn_return
-IDENTIFIER	x
-OP_SUB	_-_
-IDENTIFIER	y
-PUNC_SEMI_APOS	;'
-PUNC_RBRACE	}
-KEYWORD	avn_func
-KEYWORD	avn_int
-KEYWORD	avn_main
-PUNC_LPAREN	(
-PUNC_RPAREN	)
-PUNC_LBRACE	{
-KEYWORD	avn_int
-IDENTIFIER	a
-OP_ASSIGN	=
-INTEGER	10
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_int
-IDENTIFIER	b
-OP_ASSIGN	=
-INTEGER	5
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_int
-IDENTIFIER	sum
-OP_ASSIGN	=
-INTEGER	0
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_int
-IDENTIFIER	prod
-OP_ASSIGN	=
-INTEGER	0
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_int
-IDENTIFIER	quo
-OP_ASSIGN	=
-INTEGER	0
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_if
-PUNC_LPAREN	(
-IDENTIFIER	a
-OP_SUB	_-_
-IDENTIFIER	b
-PUNC_RPAREN	)
-PUNC_LBRACE	{
-KEYWORD	avn_print
-STRING	"Positive difference"
-PUNC_SEMI_APOS	;'
-PUNC_RBRACE	}
-KEYWORD	avn_else
-PUNC_LBRACE	{
-KEYWORD	avn_print
-STRING	"Zero or negative"
-PUNC_SEMI_APOS	;'
-PUNC_RBRACE	}
-IDENTIFIER	sum
-OP_ASSIGN	=
-IDENTIFIER	a
-OP_ADD	_+_
-IDENTIFIER	b
-PUNC_SEMI_APOS	;'
-IDENTIFIER	prod
-OP_ASSIGN	=
-IDENTIFIER	a
-OP_MUL	_*_
-IDENTIFIER	b
-PUNC_SEMI_APOS	;'
-IDENTIFIER	quo
-OP_ASSIGN	=
-IDENTIFIER	a
-OP_DIV	_/_
-IDENTIFIER	b
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_print
-STRING	"Sum is "
-PUNC_COMMA	_,_
-IDENTIFIER	sum
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_print
-STRING	"Product is "
-PUNC_COMMA	_,_
-IDENTIFIER	prod
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_print
-STRING	"Quotient is "
-PUNC_COMMA	_,_
-IDENTIFIER	quo
-PUNC_SEMI_APOS	;'
-IDENTIFIER	a
-OP_INC	_++_
-PUNC_SEMI_APOS	;'
-IDENTIFIER	b
-OP_DEC	_--_
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_print
-STRING	"After increment/decrement a,b"
-PUNC_COMMA	_,_
-IDENTIFIER	a
-PUNC_COMMA	_,_
-IDENTIFIER	b
-PUNC_SEMI_APOS	;'
-KEYWORD	avn_return
-INTEGER	0
-PUNC_SEMI_APOS	;'
-PUNC_RBRACE	}
+Line 1: KEYWORD              → avn_int
+Line 1: IDENTIFIER           → add
+Line 1: LPAREN               → (
+Line 1: KEYWORD              → avn_int
+Line 1: IDENTIFIER           → a
+Line 1: COMMA                → ,
+Line 1: KEYWORD              → avn_int
+Line 1: IDENTIFIER           → b
+Line 1: RPAREN               → )
+Line 1: LBRACE               → {
+Line 2: KEYWORD              → avn_return
+Line 2: IDENTIFIER           → a
+Line 2: OP_ADD               → _+_
+Line 2: IDENTIFIER           → b
+Line 2: SEMICOLON            → ;
+Line 3: RBRACE               → }
+Line 5: KEYWORD              → avn_int
+Line 5: IDENTIFIER           → sub
+Line 5: LPAREN               → (
+Line 5: KEYWORD              → avn_int
+Line 5: IDENTIFIER           → x
+Line 5: COMMA                → ,
+Line 5: KEYWORD              → avn_int
+Line 5: IDENTIFIER           → y
+Line 5: RPAREN               → )
+Line 5: LBRACE               → {
+Line 6: KEYWORD              → avn_return
+Line 6: IDENTIFIER           → x
+Line 6: OP_SUB               → _-_
+Line 6: IDENTIFIER           → y
+Line 6: SEMICOLON            → ;
+Line 7: RBRACE               → }
+Line 9: KEYWORD              → avn_int
+Line 9: KEYWORD              → avn_main
+Line 9: LPAREN               → (
+Line 9: RPAREN               → )
+Line 9: LBRACE               → {
+Line 10: KEYWORD              → avn_int
+Line 10: IDENTIFIER           → a
+Line 10: ASSIGN_OP            → =
+Line 10: INTEGER              → 10
+Line 10: SEMICOLON            → ;
+Line 11: KEYWORD              → avn_int
+Line 11: IDENTIFIER           → b
+Line 11: ASSIGN_OP            → =
+Line 11: INTEGER              → 5
+Line 11: SEMICOLON            → ;
+Line 12: KEYWORD              → avn_int
+Line 12: IDENTIFIER           → sum
+Line 12: ASSIGN_OP            → =
+Line 12: INTEGER              → 0
+Line 12: SEMICOLON            → ;
+Line 13: KEYWORD              → avn_int
+Line 13: IDENTIFIER           → prod
+Line 13: ASSIGN_OP            → =
+Line 13: INTEGER              → 0
+Line 13: SEMICOLON            → ;
+Line 14: KEYWORD              → avn_int
+Line 14: IDENTIFIER           → quo
+Line 14: ASSIGN_OP            → =
+Line 14: INTEGER              → 0
+Line 14: SEMICOLON            → ;
+Line 16: KEYWORD              → avn_if
+Line 16: LPAREN               → (
+Line 16: IDENTIFIER           → a
+Line 16: OP_SUB               → _-_
+Line 16: IDENTIFIER           → b
+Line 16: RPAREN               → )
+Line 16: LBRACE               → {
+Line 17: KEYWORD              → avn_cout
+Line 17: EXE_OP               → <<
+Line 17: STRING               → "Positive difference"
+Line 17: SEMICOLON            → ;
+Line 18: RBRACE               → }
+Line 19: KEYWORD              → avn_else
+Line 19: LBRACE               → {
+Line 20: KEYWORD              → avn_cout
+Line 20: EXE_OP               → <<
+Line 20: STRING               → "Zero or negative"
+Line 20: SEMICOLON            → ;
+Line 21: RBRACE               → }
+Line 23: IDENTIFIER           → sum
+Line 23: ASSIGN_OP            → =
+Line 23: IDENTIFIER           → a
+Line 23: OP_ADD               → _+_
+Line 23: IDENTIFIER           → b
+Line 23: SEMICOLON            → ;
+Line 24: IDENTIFIER           → prod
+Line 24: ASSIGN_OP            → =
+Line 24: IDENTIFIER           → a
+Line 24: OP_MUL               → _*_
+Line 24: IDENTIFIER           → b
+Line 24: SEMICOLON            → ;
+Line 25: IDENTIFIER           → quo
+Line 25: ASSIGN_OP            → =
+Line 25: IDENTIFIER           → a
+Line 25: OP_DIV               → _/_
+Line 25: IDENTIFIER           → b
+Line 25: SEMICOLON            → ;
+Line 27: KEYWORD              → avn_cout
+Line 27: EXE_OP               → <<
+Line 27: STRING               → "Sum is "
+Line 27: EXE_OP               → <<
+Line 27: IDENTIFIER           → sum
+Line 27: SEMICOLON            → ;
+Line 28: KEYWORD              → avn_cout
+Line 28: EXE_OP               → <<
+Line 28: STRING               → "Product is "
+Line 28: EXE_OP               → <<
+Line 28: IDENTIFIER           → prod
+Line 28: SEMICOLON            → ;
+Line 29: KEYWORD              → avn_cout
+Line 29: EXE_OP               → <<
+Line 29: STRING               → "Quotient is "
+Line 29: EXE_OP               → <<
+Line 29: IDENTIFIER           → quo
+Line 29: SEMICOLON            → ;
+Line 31: IDENTIFIER           → a
+Line 31: OP_INC               → _++_
+Line 31: SEMICOLON            → ;
+Line 32: IDENTIFIER           → b
+Line 32: OP_DEC               → _--_
+Line 32: SEMICOLON            → ;
+Line 34: KEYWORD              → avn_cout
+Line 34: EXE_OP               → <<
+Line 34: STRING               → "After increment/decrement a,b"
+Line 34: EXE_OP               → <<
+Line 34: IDENTIFIER           → a
+Line 34: EXE_OP               → <<
+Line 34: IDENTIFIER           → b
+Line 34: SEMICOLON            → ;
+Line 36: KEYWORD              → avn_return
+Line 36: INTEGER              → 0
+Line 36: SEMICOLON            → ;
+Line 37: RBRACE               → }
+Line 38: IDENTIFIER           → f
