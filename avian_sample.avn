@@ -1,38 +1,38 @@
 avn_int add(avn_int a, avn_int b) {
-    avn_return a _+_ b;'
+    avn_return a _+_ b;
 }
 
 avn_int sub(avn_int x, avn_int y) {
-    avn_return x _-_ y;'
+    avn_return x _-_ y;
 }
 
  avn_int avn_main() {
-    avn_int a = 10;'
-    avn_int b = 5;'
-    avn_int sum = 0;'
-    avn_int prod = 0;'
-    avn_int quo = 0;'
+    avn_int a = 10;
+    avn_int b = 5;
+    avn_int sum = 0;
+    avn_int prod = 0;
+    avn_int quo = 0;
 
     avn_if (a _-_ b) {
-        avn_cout << "Positive difference";'
+        avn_cout << "Positive difference";
     } 
     avn_else {
-        avn_cout << "Zero or negative";'
+        avn_cout << "Zero or negative";
     }
 
-    sum = a _+_ b;'
-    prod = a _*_ b;'
-    quo = a _/_ b;'
+    sum = a _+_ b;
+    prod = a _*_ b;
+    quo = a _/_ b;
 
-    avn_cout << "Sum is " << sum;'
-    avn_cout << "Product is " << prod;'
-    avn_cout << "Quotient is " << quo;'
+    avn_cout << "Sum is " << sum;
+    avn_cout << "Product is " << prod;
+    avn_cout << "Quotient is " << quo;
 
-    a _++_;'
-    b _--_;'
+    a _++_;
+    b _--_;
 
-    avn_cout << "After increment/decrement a,b" << a << b;'
+    avn_cout << "After increment/decrement a,b" << a << b;
 
-    avn_return 0;'
+    avn_return 0;
 }
-
+f
