@@ -67,7 +67,7 @@ avn_if, avn_else, avn_for, avn_while, avn_break, avn_continue, avn_cin, avn_cout
 | Symbol | Description                        |
 | ------ | ---------------------------------- |
 | `_,_`  | Comma separator                    |
-| `;'`   | Statement terminator               |
+| `;`   | Statement terminator               |
 | `::`   | Section divider or scope separator |
 
 ---
