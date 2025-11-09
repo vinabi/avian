@@ -21,9 +21,8 @@ This implementation focuses on correctness, originality, and realism according t
 7. [Sample Program](#sample-program)
 8. [Example Output](#example-output)
 9. [Error Handling Examples](#error-handling-examples)
-10. [Documentation Requirements](#documentation-requirements)
-11. [Grading Rubric Alignment](#grading-rubric-alignment)
-12. [Future Work (Phase 2 and Beyond)](#future-work-phase-2-and-beyond)
+10. [Documentation Includes](#documentation-includes)
+11. [Future Work (Phase 2 and Beyond)](#future-work-phase-2-and-beyond)
 
 ---
 
