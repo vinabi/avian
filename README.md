@@ -38,7 +38,7 @@ This implementation focuses on correctness, originality, and realism according t
 ├── README.md              # Documentation file (this file)
 └── docs/
     ├── video.mp4    # execution video
-    └── documentation.pdf    # Identifier and Number FA diagrams and regex definitions for all tokens
+    └── regex_def.pdf    # Identifier and Number FA diagrams and regex definitions for all tokens
 ```
 
 ---
