@@ -32,6 +32,13 @@ STR     \"[^\"]*\"
                                    BEGIN(INITIAL);
                                 }
 
+\"[^\"]*$                       { fprintf(stderr, "Line %d: ERROR → unterminated string: %s\n", yylineno, yytext); }
+\"[^\"]*                        { fprintf(stderr, "Line %d: ERROR → unterminated string at EOF\n", yylineno); }
+
+{DIGIT}+{IDST}({IDST}|{DIGIT})* { fprintf(stderr, "Line %d: ERROR → invalid identifier (cannot start with digit): %s\n", yylineno, yytext); }
+
+{DIGIT}+"."{DIGIT}*{IDST}+({IDST}|{DIGIT})* { fprintf(stderr, "Line %d: ERROR → invalid number (malformed float): %s\n", yylineno, yytext); }
+
 avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn_cin|avn_cout|avn_scan|avn_int|avn_float|avn_str|avn_main|avn_end  { print_token("KEYWORD", yytext); }
 
 "_++_"      { print_token("OP_INC", yytext); }
@@ -72,7 +79,18 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 
 {WS}|{NEWLINE}   ;
 
-.           { fprintf(stderr, "Line %d: ERROR → %s\n", yylineno, yytext); }
+"_"[+\-*/,]{3,}"_"      { fprintf(stderr, "Line %d: ERROR → malformed operator (too many operator symbols): %s\n", yylineno, yytext); }
+"_"[+\-*/,]{1,2}        { fprintf(stderr, "Line %d: ERROR → incomplete operator (missing closing underscore '_'): %s\n", yylineno, yytext); }
+[+\-]{2}"_"             { fprintf(stderr, "Line %d: ERROR → incomplete operator (missing opening underscore '_'): %s\n", yylineno, yytext); }
+"_"[+\-*/,]{1,2}[^_\n \t]    { fprintf(stderr, "Line %d: ERROR → malformed operator (invalid closing): %s\n", yylineno, yytext); }
+"_"[^+\-*/,_\n \t]+     { fprintf(stderr, "Line %d: ERROR → invalid operator pattern (unknown symbols after '_'): %s\n", yylineno, yytext); }
+
+":"                     { fprintf(stderr, "Line %d: ERROR → incomplete punctuation (expected double colon '::'): %s\n", yylineno, yytext); }
+"!"                     { fprintf(stderr, "Line %d: ERROR → incomplete operator (expected '!=' not standalone '!'): %s\n", yylineno, yytext); }
+"="{2,}                 { fprintf(stderr, "Line %d: ERROR → malformed equality operator (too many '=' symbols): %s\n", yylineno, yytext); }
+"!"{2,}                 { fprintf(stderr, "Line %d: ERROR → invalid operator (multiple '!' symbols): %s\n", yylineno, yytext); }
+
+.           { fprintf(stderr, "Line %d: ERROR → invalid character: '%s' (ASCII: %d)\n", yylineno, yytext, (int)yytext[0]); }
 
 %%
 
@@ -80,4 +98,3 @@ int main(void){
     yylex();
     return 0;
 }
-
