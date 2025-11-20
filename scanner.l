@@ -53,10 +53,6 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 "::"        { print_token("PUNC_COLONPAIR", yytext); }
 
 "="         { print_token("ASSIGN_OP", yytext); }
-"+"         { print_token("PLUS_OP", yytext); }
-"-"         { print_token("MINUS_OP", yytext); }
-"*"         { print_token("MULT_OP", yytext); }
-"/"         { print_token("DIV_OP", yytext); }
 "("         { print_token("LPAREN", yytext); }
 ")"         { print_token("RPAREN", yytext); }
 "{"         { print_token("LBRACE", yytext); }
@@ -84,6 +80,11 @@ avn_if|avn_else|avn_for|avn_while|avn_break|avn_continue|avn_func|avn_return|avn
 [+\-]{2}"_"             { fprintf(stderr, "Line %d: ERROR → incomplete operator (missing opening underscore '_'): %s\n", yylineno, yytext); }
 "_"[+\-*/,]{1,2}[^_\n \t]    { fprintf(stderr, "Line %d: ERROR → malformed operator (invalid closing): %s\n", yylineno, yytext); }
 "_"[^+\-*/,_\n \t]+     { fprintf(stderr, "Line %d: ERROR → invalid operator pattern (unknown symbols after '_'): %s\n", yylineno, yytext); }
+
+"+"                     { fprintf(stderr, "Line %d: ERROR → invalid operator '+' (use '_+_' instead)\n", yylineno); }
+"-"                     { fprintf(stderr, "Line %d: ERROR → invalid operator '-' (use '_-_' instead)\n", yylineno); }
+"*"                     { fprintf(stderr, "Line %d: ERROR → invalid operator '*' (use '_*_' instead)\n", yylineno); }
+"/"                     { fprintf(stderr, "Line %d: ERROR → invalid operator '/' (use '_/_' instead)\n", yylineno); }
 
 ":"                     { fprintf(stderr, "Line %d: ERROR → incomplete punctuation (expected double colon '::'): %s\n", yylineno, yytext); }
 "!"                     { fprintf(stderr, "Line %d: ERROR → incomplete operator (expected '!=' not standalone '!'): %s\n", yylineno, yytext); }
