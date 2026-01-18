@@ -11,18 +11,34 @@ This implementation focuses on correctness, originality, and realism according t
 ---
 
 ## Table of Contents
+😭 okay okay. Clean. Normal. No drama.
 
-1. [Project Structure](#project-structure)
-2. [Language Design](#language-design)
-3. [Language Philosophy](#language-philosophy)
-4. [Features](#features)
-5. [Installation and Setup](#installation-and-setup)
-6. [Building and Running the Scanner](#building-and-running-the-scanner)
-7. [Sample Program](#sample-program)
-8. [Example Output](#example-output)
-9. [Error Handling Examples](#error-handling-examples)
-10. [Documentation Includes](#documentation-includes)
-11. [Future Work (Phase 2 and Beyond)](#future-work-phase-2-and-beyond)
+## Table of Contents
+
+   [Overview](#overview)
+   [Project Structure](#project-structure)
+1. [Phase 1 Lexical Analyzer](#phase-1-lexical-analyzer)
+     1.1 [Language Design](#language-design)
+     1.2 [Language Philosophy](#language-philosophy)
+     1.3 [Features](#features)
+     1.4 [Installation and Setup](#installation-and-setup)
+     1.5 [Building and Running the Scanner](#building-and-running-the-scanner)
+     1.6 [Sample Program](#sample-program-avian_sampleavn)
+     1.7 [Example Output](#example-output-tokenstxt)
+     1.8 [Error Handling Examples](#error-handling-examples)
+     1.9 [Documentation Includes](#documentation-includes)
+2. [Phase 2 Syntax Analysis](#phase-2--syntax-analysis-parser)
+     2.1 [Overview](#overview-1)
+     2.2 [Role of Phase 2 in the Compiler](#role-of-phase-2-in-the-compiler)
+     2.3 [Grammar Design](#grammar-design-cfg)
+     2.4 [FIRST and FOLLOW Sets](#first-and-follow-sets-dragon-book-style)
+     2.5 [Parse Tree Construction](#parse-tree-construction)
+     2.6 [Parser Implementation](#parser-implementation)
+     2.7 [Error Handling](#error-handling)
+     2.8 [Building and Running the Parser](#building-and-running-the-parser)
+     2.9 [Test Programs](#test-programs)
+     2.10 [Phase 2 Outcome](#phase-2-outcome)
+
 
 ---
 
@@ -111,7 +127,7 @@ The scanner identifies and classifies the following categories:
 
 Comments are ignored by the scanner.
 
-### 3. Error Handling
+### 1. Error Handling
 
 Unrecognized or invalid characters are reported in `error.log` with their respective line numbers.
 
@@ -121,7 +137,7 @@ Unrecognized or invalid characters are reported in `error.log` with their respec
 Line 4: ERROR → @invalid
 ```
 
-### 4. Line Tracking
+### 2. Line Tracking
 
 Each token is printed with its **line number**, type, and value in the following format:
 
@@ -299,7 +315,7 @@ Provided FA diagrams for:
 * **Identifiers**
 * **Numbers (integers and floats)**
 
-### 3. Keyword and Operator Explanation
+### 1. Keyword and Operator Explanation
 
 All keywords in Avian share the `avn_` prefix to make them easily distinguishable from identifiers, simplify regex patterns, streamline FA design through a shared starting path, and maintain a consistent, readable, C++-like structure. It keeps every reserved word distinct, easy to detect, and ensures consistent token recognition across the language.
 
