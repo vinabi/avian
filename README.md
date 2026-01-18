@@ -305,17 +305,197 @@ All keywords in Avian share the `avn_` prefix to make them easily distinguishabl
 
 ---
 
-## Future Work (Phase 2 and Beyond)
+# Phase 2 — Syntax Analysis (Parser)
 
-The Avian language lexical analyzer will serve as the foundation for subsequent compiler phases, including:
+## Overview
 
-**Syntax Analysis (Parser)**
-   Using grammar rules and syntax-directed translation.
-2. **Semantic Analysis**
-   Type checking, scope resolution, and symbol table construction.
-3. **Intermediate Code Generation**
-   Translating source code into an intermediate representation.
-4. **Code Optimization and Final Output**
-   Producing efficient and executable machine-level code.
+Phase 2 extends the Avian compiler by implementing a **syntax analyzer (parser)** using **YACC / Bison**, following the principles of compiler design. While Phase 1 focused on breaking the source program into tokens, Phase 2 focuses on **verifying the grammatical structure** of those tokens using a **Context-Free Grammar (CFG)**.The parser ensures that programs written in the Avian language follow valid syntactic rules before moving to later compilation phases.
 
-This project demonstrates the foundational concept that a consistent lexical structure allows any symbolic language — to be analyzed and interpreted by a compiler.
+---
+
+## Role of Phase 2 in the Compiler
+
+Phase 2 performs **syntax analysis**, which means:
+
+* Checking whether the sequence of tokens produced by the scanner is grammatically valid
+* Ensuring correct statement structure
+* Detecting and reporting syntax errors with line numbers
+* Conceptually constructing a parse tree for valid programs
+
+This phase does **not** perform semantic analysis or code generation.
+
+---
+
+## Grammar Design (CFG)
+
+The Avian grammar is designed using **Dragon Book conventions**, with short non-terminals and clear structure.
+
+### Start Symbol
+
+```
+P
+```
+
+### Grammar Rules
+
+```
+P  → B
+
+B  → { SL }
+
+SL → S SL | ε
+
+S  → D | A | IF | WH | OUT
+
+D  → avn_int id ;
+
+A  → id = num ;
+
+IF → avn_if ( num ) B
+    | avn_if ( num ) B avn_else B
+
+WH → avn_while ( num ) B
+
+OUT → avn_print id ;
+```
+
+This grammar supports all mandatory constructs required by the Phase 2 rubric:
+
+* Program structure
+* Variable declaration
+* Assignment
+* Conditional statements
+* Loop statements
+* Output statements
+
+---
+
+## FIRST and FOLLOW Sets (Dragon Book Style)
+
+### FIRST Sets
+
+```
+FIRST(S)  = { avn_int, id, avn_if, avn_while, avn_print }
+FIRST(SL) = { avn_int, id, avn_if, avn_while, avn_print, ε }
+```
+
+### FOLLOW Sets
+
+```
+FOLLOW(P)  = { $ }
+FOLLOW(SL) = { }, $ }
+FOLLOW(S)  = { avn_int, id, avn_if, avn_while, avn_print, }, $ }
+```
+
+These sets are used during grammar analysis to ensure correct parsing behavior and error detection.
+
+---
+
+## Parse Tree Construction
+
+For a valid Avian program fragment:
+
+```
+{
+  avn_int a;
+  a = 5;
+  avn_if (1) { avn_print a; }
+}
+```
+
+A fully expanded **parse tree** can be constructed based on the grammar rules, showing how the program derives from the start symbol `P`.
+
+The parse tree is **documented manually** (hand-drawn), as required by the project rubric.
+The parser itself does not print the parse tree during execution.
+
+---
+
+## Parser Implementation
+
+The parser is implemented using **Bison**, and it is tightly integrated with the Phase 1 scanner.
+
+### Key Characteristics
+
+* Reuses **all tokens** defined in `scanner.l`
+* Uses `%token` declarations to share tokens between scanner and parser
+* Implements grammar rules exactly as defined in the CFG
+* Reports syntax errors using `yyerror()`
+* Prints a success message if parsing completes without errors
+
+---
+
+## Error Handling
+
+The parser detects and reports syntax errors such as:
+
+* Missing semicolons
+* Missing parentheses
+* Invalid statement structure
+
+### Example Error Output
+
+```
+Syntax Error at line 4: expected ';' but found '}'
+```
+
+Each error message includes:
+
+* Line number
+* Nature of error
+* Found token
+
+---
+
+## Building and Running the Parser
+
+### Required Tools
+
+* Flex
+* Bison
+* GCC
+
+### Build Commands
+
+```bash
+flex scanner.l
+bison -dy parser.y
+gcc lex.yy.c y.tab.c -o avian_parser
+```
+
+### Run the Parser
+
+```bash
+./avian_parser < avian_sample.avn
+```
+
+### Successful Output
+
+```
+Syntax analysis successful
+```
+
+---
+
+## Test Programs
+
+### Valid Program
+
+* Includes declaration, assignment, conditional, and output
+* Parsed successfully
+
+### Invalid Program
+
+* Contains missing or incorrect tokens
+* Parser reports syntax error with line number
+
+---
+
+## Phase 2 Outcome
+
+By the end of Phase 2, the Avian compiler is capable of:
+
+* Validating complete Avian programs syntactically
+* Detecting grammar violations
+* Preparing the code structure for semantic analysis
+
+This phase demonstrates the practical application of **CFGs, FIRST/FOLLOW sets, and parsing theory**.
