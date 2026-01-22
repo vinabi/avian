@@ -1,0 +1,24 @@
+{
+  avn_int a = 10;
+  avn_int b = 5;
+  avn_int sum;
+  avn_int prod;
+  
+  sum = a _+_ b;
+  prod = a _*_ b;
+  
+  avn_print sum;
+  avn_print prod;
+  
+  avn_if (a _-_ b) {
+    avn_print a;
+  }
+  avn_else {
+    avn_print b;
+  }
+  
+  avn_while (10) {
+    avn_int x = 5 _+_ 3;
+    avn_print x;
+  }
+}

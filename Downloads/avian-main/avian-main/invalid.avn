@@ -1,0 +1,6 @@
+{
+  avn_int a = 10;
+  avn_int b;
+  b = a _+_ 5
+  avn_print b;
+}
