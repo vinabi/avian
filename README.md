@@ -365,25 +365,36 @@ SL → S SL | ε
 S  → D | A | IF | WH | OUT
 
 D  → avn_int id ;
+   | avn_int id = E ;
 
-A  → id = num ;
+A  → id = E ;
 
-IF → avn_if ( num ) B
-    | avn_if ( num ) B avn_else B
+IF → avn_if ( E ) B
+   | avn_if ( E ) B avn_else B
 
-WH → avn_while ( num ) B
+WH → avn_while ( E ) B
 
 OUT → avn_print id ;
+    | avn_print E ;
+
+E  → E _+_ E
+   | E _-_ E
+   | E _*_ E
+   | E _/_ E
+   | ( E )
+   | id
+   | num
 ```
 
 This grammar supports all mandatory constructs required by the Phase 2 rubric:
 
-* Program structure
-* Variable declaration
-* Assignment
-* Conditional statements
-* Loop statements
-* Output statements
+* Program structure with block delimiters
+* Variable declaration (with optional initialization)
+* Assignment statement (with expression support)
+* Conditional statements (if/else with expression conditions)
+* Loop statements (while with expression conditions)
+* Output statements (print variables or expressions)
+* Arithmetic expressions with Phase 01 operators
 
 ---
 
@@ -392,16 +403,31 @@ This grammar supports all mandatory constructs required by the Phase 2 rubric:
 ### FIRST Sets
 
 ```
-FIRST(S)  = { avn_int, id, avn_if, avn_while, avn_print }
+FIRST(P)  = { { }
+FIRST(B)  = { { }
 FIRST(SL) = { avn_int, id, avn_if, avn_while, avn_print, ε }
+FIRST(S)  = { avn_int, id, avn_if, avn_while, avn_print }
+FIRST(D)  = { avn_int }
+FIRST(A)  = { id }
+FIRST(IF) = { avn_if }
+FIRST(WH) = { avn_while }
+FIRST(OUT)= { avn_print }
+FIRST(E)  = { id, num, ( }
 ```
 
 ### FOLLOW Sets
 
 ```
 FOLLOW(P)  = { $ }
-FOLLOW(SL) = { }, $ }
-FOLLOW(S)  = { avn_int, id, avn_if, avn_while, avn_print, }, $ }
+FOLLOW(B)  = { avn_else, }, $ }
+FOLLOW(SL) = { } }
+FOLLOW(S)  = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(D)  = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(A)  = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(IF) = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(WH) = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(OUT)= { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(E)  = { ;, ), _+_, _-_, _*_, _/_ }
 ```
 
 These sets are used during grammar analysis to ensure correct parsing behavior and error detection.
@@ -476,13 +502,13 @@ Each error message includes:
 ```bash
 flex scanner.l
 bison -dy parser.y
-gcc lex.yy.c y.tab.c -o avian_parser
+gcc lex.yy.c y.tab.c -o avn_parser
 ```
 
 ### Run the Parser
 
 ```bash
-./avian_parser < avian_sample.avn
+./avn_parser < avian_sample.avn
 ```
 
 ### Successful Output
@@ -495,19 +521,145 @@ Syntax analysis successful
 
 ## Test Programs
 
-### Valid Program
+### Valid Program (valid.avn)
 
-* Includes declaration, assignment, conditional, and output
-* Parsed successfully
+```
+{
+  avn_int a = 10;
+  avn_int b = 5;
+  avn_int sum;
+  avn_int prod;
+  
+  sum = a _+_ b;
+  prod = a _*_ b;
+  
+  avn_print sum;
+  avn_print prod;
+  
+  avn_if (a _-_ b) {
+    avn_print a;
+  }
+  avn_else {
+    avn_print b;
+  }
+  
+  avn_while (10) {
+    avn_int x = 5 _+_ 3;
+    avn_print x;
+  }
+}
+```
 
-### Invalid Program
+Expected Output:
 
-* Contains missing or incorrect tokens
-* Parser reports syntax error with line number
+```
+Line 2: KEYWORD              → avn_int
+Line 2: IDENTIFIER           → a
+Line 2: ASSIGN_OP            → =
+Line 2: INTEGER              → 10
+Line 2: SEMICOLON            → ;
+Line 3: KEYWORD              → avn_int
+Line 3: IDENTIFIER           → b
+Line 3: ASSIGN_OP            → =
+Line 3: INTEGER              → 5
+Line 3: SEMICOLON            → ;
+Line 4: KEYWORD              → avn_int
+Line 4: IDENTIFIER           → sum
+Line 4: SEMICOLON            → ;
+Line 5: KEYWORD              → avn_int
+Line 5: IDENTIFIER           → prod
+Line 5: SEMICOLON            → ;
+Line 7: IDENTIFIER           → sum
+Line 7: ASSIGN_OP            → =
+Line 7: IDENTIFIER           → a
+Line 7: OP_ADD               → _+_
+Line 7: IDENTIFIER           → b
+Line 7: SEMICOLON            → ;
+Line 8: IDENTIFIER           → prod
+Line 8: ASSIGN_OP            → =
+Line 8: IDENTIFIER           → a
+Line 8: OP_MUL               → _*_
+Line 8: IDENTIFIER           → b
+Line 8: SEMICOLON            → ;
+Line 10: KEYWORD             → avn_print
+Line 10: IDENTIFIER          → sum
+Line 10: SEMICOLON           → ;
+Line 11: KEYWORD             → avn_print
+Line 11: IDENTIFIER          → prod
+Line 11: SEMICOLON           → ;
+Line 13: KEYWORD             → avn_if
+Line 13: LPAREN              → (
+Line 13: IDENTIFIER          → a
+Line 13: OP_SUB              → _-_
+Line 13: IDENTIFIER          → b
+Line 13: RPAREN              → )
+Line 13: LBRACE              → {
+Line 14: KEYWORD             → avn_print
+Line 14: IDENTIFIER          → a
+Line 14: SEMICOLON           → ;
+Line 15: RBRACE              → }
+Line 16: KEYWORD             → avn_else
+Line 16: LBRACE              → {
+Line 17: KEYWORD             → avn_print
+Line 17: IDENTIFIER          → b
+Line 17: SEMICOLON           → ;
+Line 18: RBRACE              → }
+Line 20: KEYWORD             → avn_while
+Line 20: LPAREN              → (
+Line 20: INTEGER             → 10
+Line 20: RPAREN              → )
+Line 20: LBRACE              → {
+Line 21: KEYWORD             → avn_int
+Line 21: IDENTIFIER          → x
+Line 21: ASSIGN_OP           → =
+Line 21: INTEGER             → 5
+Line 21: OP_ADD              → _+_
+Line 21: INTEGER             → 3
+Line 21: SEMICOLON           → ;
+Line 22: KEYWORD             → avn_print
+Line 22: IDENTIFIER          → x
+Line 22: SEMICOLON           → ;
+Line 23: RBRACE              → }
+Line 24: RBRACE              → }
+Syntax analysis successful
+```
+
+### Invalid Program (invalid.avn)
+
+```
+{
+  avn_int a = 10;
+  avn_int b;
+  b = a _+_ 5
+  avn_print b;
+}
+```
+
+Expected Output:
+
+```
+Line 2: KEYWORD              → avn_int
+Line 2: IDENTIFIER           → a
+Line 2: ASSIGN_OP            → =
+Line 2: INTEGER              → 10
+Line 2: SEMICOLON            → ;
+Line 3: KEYWORD              → avn_int
+Line 3: IDENTIFIER           → b
+Line 3: SEMICOLON            → ;
+Line 4: IDENTIFIER           → b
+Line 4: ASSIGN_OP            → =
+Line 4: IDENTIFIER           → a
+Line 4: OP_ADD               → _+_
+Line 4: INTEGER              → 5
+Line 5: KEYWORD              → avn_print
+Syntax Error at line 5: syntax error, found 'avn_print'
+```
+
+The error occurs because line 4 is missing a semicolon after the assignment statement.
 
 ---
 
-## Phase 2 Outcome
+## Phase 2 Results
 
 By the end of Phase 2, the Avian compiler is capable of:
 
