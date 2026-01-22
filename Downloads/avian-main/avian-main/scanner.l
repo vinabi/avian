@@ -46,35 +46,46 @@ avn_if      { print_token("KEYWORD", yytext); return AVN_IF; }
 avn_else    { print_token("KEYWORD", yytext); return AVN_ELSE; }
 avn_while   { print_token("KEYWORD", yytext); return AVN_WHILE; }
 avn_print   { print_token("KEYWORD", yytext); return AVN_PRINT; }
-avn_for|avn_break|avn_continue|avn_func|avn_return|avn_cin|avn_cout|avn_scan|avn_float|avn_str|avn_main|avn_end  { print_token("KEYWORD", yytext); }
+avn_for     { print_token("KEYWORD", yytext); return AVN_FOR; }
+avn_break   { print_token("KEYWORD", yytext); return AVN_BREAK; }
+avn_continue { print_token("KEYWORD", yytext); return AVN_CONTINUE; }
+avn_func    { print_token("KEYWORD", yytext); return AVN_FUNC; }
+avn_return  { print_token("KEYWORD", yytext); return AVN_RETURN; }
+avn_cin     { print_token("KEYWORD", yytext); return AVN_CIN; }
+avn_cout    { print_token("KEYWORD", yytext); return AVN_COUT; }
+avn_scan    { print_token("KEYWORD", yytext); return AVN_SCAN; }
+avn_float   { print_token("KEYWORD", yytext); return AVN_FLOAT; }
+avn_str     { print_token("KEYWORD", yytext); return AVN_STR; }
+avn_main    { print_token("KEYWORD", yytext); return AVN_MAIN; }
+avn_end     { print_token("KEYWORD", yytext); return AVN_END; }
 
-"_++_"      { print_token("OP_INC", yytext); }
-"_--_"      { print_token("OP_DEC", yytext); }
+"_++_"      { print_token("OP_INC", yytext); return OP_INC; }
+"_--_"      { print_token("OP_DEC", yytext); return OP_DEC; }
 "_+_"       { print_token("OP_ADD", yytext); return OP_ADD; }
 "_-_"       { print_token("OP_SUB", yytext); return OP_SUB; }
 "_*_"       { print_token("OP_MUL", yytext); return OP_MUL; }
 "_/_"       { print_token("OP_DIV", yytext); return OP_DIV; }
 
-"_,_"       { print_token("PUNC_COMMA", yytext); }
-";'"        { print_token("PUNC_SEMI_APOS", yytext); }
-"::"        { print_token("PUNC_COLONPAIR", yytext); }
+"_,_"       { print_token("PUNC_COMMA", yytext); return PUNC_COMMA; }
+";'"        { print_token("PUNC_SEMI_APOS", yytext); return PUNC_SEMI_APOS; }
+"::"        { print_token("PUNC_COLONPAIR", yytext); return PUNC_COLONPAIR; }
 
 "="         { print_token("ASSIGN_OP", yytext); return ASSIGN; }
 "("         { print_token("LPAREN", yytext); return LPAREN; }
 ")"         { print_token("RPAREN", yytext); return RPAREN; }
 "{"         { print_token("LBRACE", yytext); return LBRACE; }
 "}"         { print_token("RBRACE", yytext); return RBRACE; }
-","         { print_token("COMMA", yytext); }
+","         { print_token("COMMA", yytext); return COMMA; }
 ";"        { print_token("SEMICOLON", yytext); return SEMI; }
-"<"         { print_token("LT_OP", yytext); }
-">"         { print_token("GT_OP", yytext); }
-"=="        { print_token("EQ_OP", yytext); }
-"!="        { print_token("NE_OP", yytext); }
+"<"         { print_token("LT_OP", yytext); return LT_OP; }
+">"         { print_token("GT_OP", yytext); return GT_OP; }
+"=="        { print_token("EQ_OP", yytext); return EQ_OP; }
+"!="        { print_token("NE_OP", yytext); return NE_OP; }
 
-"<<"        { print_token("EXE_OP", yytext); }
-">>"        { print_token("INS_OP", yytext); }
+"<<"        { print_token("EXE_OP", yytext); return EXE_OP; }
+">>"        { print_token("INS_OP", yytext); return INS_OP; }
 
-{STR}       { print_token("STRING", yytext); }
+{STR}       { print_token("STRING", yytext); return STRING; }
 {EXP}       { print_token("EXP_NUMBER", yytext); return NUM; }
 {FLOAT}     { print_token("FLOAT_NUMBER", yytext); return NUM; }
 {INT}       { print_token("INTEGER", yytext); return NUM; }

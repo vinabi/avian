@@ -365,25 +365,36 @@ SL → S SL | ε
 S  → D | A | IF | WH | OUT
 
 D  → avn_int id ;
+   | avn_int id = E ;
 
-A  → id = num ;
+A  → id = E ;
 
-IF → avn_if ( num ) B
-    | avn_if ( num ) B avn_else B
+IF → avn_if ( E ) B
+   | avn_if ( E ) B avn_else B
 
-WH → avn_while ( num ) B
+WH → avn_while ( E ) B
 
 OUT → avn_print id ;
+    | avn_print E ;
+
+E  → E _+_ E
+   | E _-_ E
+   | E _*_ E
+   | E _/_ E
+   | ( E )
+   | id
+   | num
 ```
 
 This grammar supports all mandatory constructs required by the Phase 2 rubric:
 
-* Program structure
-* Variable declaration
-* Assignment
-* Conditional statements
-* Loop statements
-* Output statements
+* Program structure with block delimiters
+* Variable declaration (with optional initialization)
+* Assignment statement (with expression support)
+* Conditional statements (if/else with expression conditions)
+* Loop statements (while with expression conditions)
+* Output statements (print variables or expressions)
+* Arithmetic expressions with Phase 01 operators
 
 ---
 
@@ -392,16 +403,31 @@ This grammar supports all mandatory constructs required by the Phase 2 rubric:
 ### FIRST Sets
 
 ```
-FIRST(S)  = { avn_int, id, avn_if, avn_while, avn_print }
+FIRST(P)  = { { }
+FIRST(B)  = { { }
 FIRST(SL) = { avn_int, id, avn_if, avn_while, avn_print, ε }
+FIRST(S)  = { avn_int, id, avn_if, avn_while, avn_print }
+FIRST(D)  = { avn_int }
+FIRST(A)  = { id }
+FIRST(IF) = { avn_if }
+FIRST(WH) = { avn_while }
+FIRST(OUT)= { avn_print }
+FIRST(E)  = { id, num, ( }
 ```
 
 ### FOLLOW Sets
 
 ```
 FOLLOW(P)  = { $ }
-FOLLOW(SL) = { }, $ }
-FOLLOW(S)  = { avn_int, id, avn_if, avn_while, avn_print, }, $ }
+FOLLOW(B)  = { avn_else, }, $ }
+FOLLOW(SL) = { } }
+FOLLOW(S)  = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(D)  = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(A)  = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(IF) = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(WH) = { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(OUT)= { avn_int, id, avn_if, avn_while, avn_print, } }
+FOLLOW(E)  = { ;, ), _+_, _-_, _*_, _/_ }
 ```
 
 These sets are used during grammar analysis to ensure correct parsing behavior and error detection.

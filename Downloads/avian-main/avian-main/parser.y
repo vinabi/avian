@@ -10,11 +10,32 @@ void yyerror(const char *s);
 %}
 
 /* ===== Tokens from scanner.l ===== */
+
+/* Keywords - All Phase 1 keywords */
 %token AVN_INT AVN_IF AVN_ELSE AVN_WHILE AVN_PRINT
-%token ID NUM
+%token AVN_FOR AVN_BREAK AVN_CONTINUE AVN_FUNC AVN_RETURN
+%token AVN_CIN AVN_COUT AVN_SCAN AVN_FLOAT AVN_STR AVN_MAIN AVN_END
+
+/* Identifiers and Literals */
+%token ID NUM STRING
+
+/* Assignment Operator */
 %token ASSIGN
-%token LPAREN RPAREN LBRACE RBRACE SEMI
-%token OP_ADD OP_SUB OP_MUL OP_DIV
+
+/* Delimiters */
+%token LPAREN RPAREN LBRACE RBRACE SEMI COMMA
+
+/* Avian Custom Operators */
+%token OP_ADD OP_SUB OP_MUL OP_DIV OP_INC OP_DEC
+
+/* Avian Custom Punctuations */
+%token PUNC_COMMA PUNC_SEMI_APOS PUNC_COLONPAIR
+
+/* Comparison Operators */
+%token LT_OP GT_OP EQ_OP NE_OP
+
+/* Stream Operators */
+%token EXE_OP INS_OP
 
 %left OP_ADD OP_SUB
 %left OP_MUL OP_DIV
@@ -70,6 +91,7 @@ E   : E OP_ADD E
     | LPAREN E RPAREN
     | ID
     | NUM
+    | STRING
     ;
 
 %%
